@@ -1,0 +1,114 @@
+# ======================================================================
+# Daily Watch - 모니터링 대상 LLM API 공급사 목록
+# ======================================================================
+# 작성일: 2026-04-21
+# 관리자: <담당자 이메일>
+#
+# [작성 규칙]
+# - name:              공급사 이름 (보고서에 표시됨)
+# - models_in_use:     자사가 현재 운영 중인 모델명 (영향도 판별 기준)
+# - deprecation_page:  공식 지원 종료 공지 페이지 URL
+# - changelog_page:    릴리즈/변경사항 페이지 URL (있는 경우)
+# - email_sender:      Gmail Connector 필터에 사용할 발신자 도메인
+# - rss_feed:          RSS 피드 URL (제공되는 경우)
+# - priority:          high / medium / low
+# - note:              특이사항
+#
+# [운영 팁]
+# - models_in_use는 가능한 한 스냅샷 버전까지 정확하게 기재
+#   (예: "gpt-4o" 보다는 "gpt-4o-2024-05-13"이 더 안전)
+# - 신규 모델 도입 시 반드시 여기 먼저 등록 후 운영 반영
+# ======================================================================
+
+providers:
+
+  # ==================================================================
+  # Anthropic (Claude)
+  # ==================================================================
+  - name: "Anthropic"
+    models_in_use:
+      - "claude-opus-4-7"
+      - "claude-sonnet-4-6"
+      - "claude-haiku-4-5-20251001"
+    deprecation_page: "https://docs.anthropic.com/en/docs/about-claude/model-deprecations"
+    changelog_page: "https://docs.anthropic.com/en/release-notes/api"
+    email_sender: "noreply@anthropic.com"
+    rss_feed: null
+    priority: "high"
+    note: "자사 주력 사용 공급사"
+
+  # ==================================================================
+  # OpenAI
+  # ==================================================================
+  - name: "OpenAI"
+    models_in_use:
+      - "확인 필요 (예: gpt-5.4, gpt-4.1, text-embedding-3-small)"
+    deprecation_page: "https://platform.openai.com/docs/deprecations"
+    changelog_page: "https://platform.openai.com/docs/changelog"
+    email_sender: "noreply@openai.com"
+    rss_feed: null
+    priority: "high"
+    note: |
+      OpenAI는 단일 공지로 다수 모델 일괄 종료 사례 많음
+      (2024.01 GPT-3 계열 33개 일괄 종료)
+
+  # ==================================================================
+  # Google (Gemini / Vertex AI)
+  # ==================================================================
+  - name: "Google Gemini"
+    models_in_use:
+      - "확인 필요 (예: gemini-2.5-pro, gemini-2.5-flash)"
+    deprecation_page: "https://ai.google.dev/gemini-api/docs/changelog"
+    changelog_page: "https://ai.google.dev/gemini-api/docs/changelog"
+    email_sender: "noreply@google.com"
+    rss_feed: null
+    priority: "medium"
+    note: "Vertex AI 사용 시 별도 추가 필요"
+
+  # ==================================================================
+  # AWS Bedrock (선택)
+  # ==================================================================
+  - name: "AWS Bedrock"
+    models_in_use:
+      - "확인 필요"
+    deprecation_page: "https://docs.aws.amazon.com/bedrock/latest/userguide/model-lifecycle.html"
+    changelog_page: null
+    email_sender: "no-reply-aws@amazon.com"
+    rss_feed: null
+    priority: "low"
+    note: "미사용 시 삭제 가능"
+
+  # ==================================================================
+  # Azure OpenAI (선택)
+  # ==================================================================
+  - name: "Azure OpenAI"
+    models_in_use:
+      - "확인 필요"
+    deprecation_page: "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements"
+    changelog_page: null
+    email_sender: "azure-noreply@microsoft.com"
+    rss_feed: null
+    priority: "low"
+    note: "미사용 시 삭제 가능"
+
+# ======================================================================
+# 키워드 사전 (공지 감지 시 활용)
+# ======================================================================
+# 이 키워드 중 하나라도 공지 본문에 있으면 지원 종료 관련으로 간주
+detection_keywords:
+  english:
+    - "deprecat"
+    - "sunset"
+    - "retire"
+    - "shutdown"
+    - "shut down"
+    - "end of life"
+    - "end-of-life"
+    - "EOL"
+    - "discontinued"
+    - "removal"
+  korean:
+    - "지원 종료"
+    - "서비스 종료"
+    - "종료 예정"
+    - "사용 중단"

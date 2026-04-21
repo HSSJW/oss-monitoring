@@ -1,0 +1,633 @@
+# ======================================================================
+# Daily Watch - 모니터링 대상 오픈소스 라이브러리 목록
+# ======================================================================
+# 작성일: 2026-04-21
+# 관리자: <담당자 이메일>
+#
+# [작성 규칙]
+# - name:            사람이 읽는 이름 (보고서에 표시됨)
+# - ecosystem:       OSV.dev 기준 ecosystem 값 (대소문자 구분)
+#                    Maven / PyPI / npm / Go / Debian / OSS-Fuzz 등
+# - package:         ecosystem 내 패키지 식별자
+# - github:          "owner/repo" 형식 (GitHub 저장소가 있는 경우만)
+# - current_version: 자사가 현재 사용 중인 버전 (영향도 판별 기준)
+# - category:        분류 (Web/WAS, DBMS, OS)
+# - priority:        high / medium / low (긴급도 판단 가중치)
+# - note:            특이사항, 확인 필요 메모
+#
+# [운영 팁]
+# - 첫 1~2주는 Web/WAS 먼저 안정화 후 DBMS, OS 순서로 확장 권장
+# - OS 라이브러리 중 GitHub 저장소가 없는 것은 OSV.dev만 활용
+# - current_version 확인 필요 표시는 실제 운영팀에 확인 후 업데이트
+# ======================================================================
+
+libraries:
+
+  # ==================================================================
+  # Web / WAS (1단계 — 우선 적용)
+  # ==================================================================
+  - name: "Apache Tomcat"
+    ecosystem: "Maven"
+    package: "org.apache.tomcat:tomcat"
+    github: "apache/tomcat"
+    current_version: "10.1"
+    category: "Web/WAS"
+    priority: "high"
+    note: "tomcat4 ~ 11 버전 대 관찰 필요"
+
+  - name: "JBoss / WildFly Modules"
+    ecosystem: "Maven"
+    package: "org.jboss.modules:jboss-modules"
+    github: "jboss-modules/jboss-modules"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "high"
+    note: "jboss-modules, jboss-xnio, jboss-threads 포함"
+
+  - name: "GlassFish"
+    ecosystem: "Maven"
+    package: "org.glassfish.main:glassfish-nucleus-parent"
+    github: "eclipse-ee4j/glassfish"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "medium"
+
+  - name: "Jetty"
+    ecosystem: "Maven"
+    package: "org.eclipse.jetty:jetty-server"
+    github: "jetty/jetty.project"
+    current_version: "12.x"
+    category: "Web/WAS"
+    priority: "high"
+    note: "jetty, jetty8, jetty9, jetty12 계열 관찰"
+
+  - name: "WildFly"
+    ecosystem: "Maven"
+    package: "org.wildfly:wildfly-common"
+    github: "wildfly/wildfly"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "medium"
+
+  - name: "Open Liberty"
+    ecosystem: "Maven"
+    package: "io.openliberty:openliberty-runtime"
+    github: "OpenLiberty/open-liberty"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "medium"
+    note: "사용 여부 미확인 - 도입 시 priority 조정"
+
+  - name: "Undertow"
+    ecosystem: "Maven"
+    package: "io.undertow:undertow-core"
+    github: "undertow-io/undertow"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "medium"
+
+  - name: "Django"
+    ecosystem: "PyPI"
+    package: "django"
+    github: "django/django"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "high"
+    note: "django- 로 시작하는 플러그인 라이브러리 추가 관찰 필요"
+
+  - name: "Flask"
+    ecosystem: "PyPI"
+    package: "flask"
+    github: "pallets/flask"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "high"
+
+  - name: "FastAPI"
+    ecosystem: "PyPI"
+    package: "fastapi"
+    github: "fastapi/fastapi"
+    current_version: "확인 필요"
+    category: "Web/WAS"
+    priority: "high"
+
+  # ==================================================================
+  # DBMS (2단계)
+  # ==================================================================
+  - name: "PostgreSQL"
+    ecosystem: "OSS-Fuzz"
+    package: "postgresql"
+    github: "postgres/postgres"
+    current_version: "16.x"
+    category: "DBMS"
+    priority: "high"
+
+  - name: "MySQL"
+    ecosystem: "OSS-Fuzz"
+    package: "mysql"
+    github: "mysql/mysql-server"
+    current_version: "8.x"
+    category: "DBMS"
+    priority: "high"
+    note: "mysql++ 계열 함께 관찰"
+
+  - name: "MariaDB"
+    ecosystem: "OSS-Fuzz"
+    package: "mariadb"
+    github: "MariaDB/server"
+    current_version: "10.1"
+    category: "DBMS"
+    priority: "high"
+    note: "mariadb-10.1 판단됨"
+
+  - name: "SQLite"
+    ecosystem: "OSS-Fuzz"
+    package: "sqlite3"
+    github: "sqlite/sqlite"
+    current_version: "3.x"
+    category: "DBMS"
+    priority: "medium"
+    note: "GitHub은 공식 mirror"
+
+  - name: "Firebird"
+    ecosystem: "OSS-Fuzz"
+    package: "firebird"
+    github: "FirebirdSQL/firebird"
+    current_version: "4.0"
+    category: "DBMS"
+    priority: "low"
+    note: "firebird2 - 4.0 판단됨"
+
+  # ==================================================================
+  # OS 레벨 라이브러리 (3단계 — OSV.dev + Debian Security Tracker 활용)
+  # ==================================================================
+  # 주의: OS 라이브러리는 공식 GitHub 저장소가 없는 경우가 많음.
+  #       이 경우 OSV.dev의 Debian/Ubuntu ecosystem 데이터만 활용하고
+  #       github 필드는 null로 설정함.
+  # ==================================================================
+
+  - name: "glibc"
+    ecosystem: "Debian:12"
+    package: "glibc"
+    github: "bminor/glibc"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+    note: "GNU C Library. github은 비공식 mirror"
+
+  - name: "libstdc++"
+    ecosystem: "Debian:12"
+    package: "libstdc++6"
+    github: "gcc-mirror/gcc"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+    note: "libstdc++-arm-none-eabi, libstdc++-riscv64-unknown-elf 포함"
+
+  - name: "libgcc"
+    ecosystem: "Debian:12"
+    package: "libgcc-s1"
+    github: "gcc-mirror/gcc"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "musl"
+    ecosystem: "Alpine:v3.19"
+    package: "musl"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+    note: "공식 저장소는 musl.libc.org (GitHub 없음)"
+
+  - name: "ld-linux"
+    ecosystem: "Debian:12"
+    package: "libc6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+    note: "glibc에 포함됨"
+
+  - name: "libm"
+    ecosystem: "Debian:12"
+    package: "libc6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libpthread"
+    ecosystem: "Debian:12"
+    package: "libc6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "librt"
+    ecosystem: "Debian:12"
+    package: "libc6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libdl"
+    ecosystem: "Debian:12"
+    package: "libc6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libutil"
+    ecosystem: "Debian:12"
+    package: "libc6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libcrypt"
+    ecosystem: "Debian:12"
+    package: "libcrypt1"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libnsl"
+    ecosystem: "Debian:12"
+    package: "libnsl2"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libtirpc"
+    ecosystem: "Debian:12"
+    package: "libtirpc3"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libaio"
+    ecosystem: "Debian:12"
+    package: "libaio1"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "liburing"
+    ecosystem: "Debian:12"
+    package: "liburing2"
+    github: "axboe/liburing"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libnuma"
+    ecosystem: "Debian:12"
+    package: "libnuma1"
+    github: "numactl/numactl"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libcap"
+    ecosystem: "Debian:12"
+    package: "libcap2"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libattr"
+    ecosystem: "Debian:12"
+    package: "libattr1"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libacl"
+    ecosystem: "Debian:12"
+    package: "libacl1"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libselinux"
+    ecosystem: "Debian:12"
+    package: "libselinux1"
+    github: "SELinuxProject/selinux"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libsemanage"
+    ecosystem: "Debian:12"
+    package: "libsemanage2"
+    github: "SELinuxProject/selinux"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libseccomp"
+    ecosystem: "Debian:12"
+    package: "libseccomp2"
+    github: "seccomp/libseccomp"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libaudit"
+    ecosystem: "Debian:12"
+    package: "libaudit1"
+    github: "linux-audit/audit-userspace"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libpcre"
+    ecosystem: "Debian:12"
+    package: "libpcre3"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+    note: "PCRE 1은 EOL. PCRE2 사용 권장"
+
+  - name: "libpcre2"
+    ecosystem: "Debian:12"
+    package: "libpcre2-8-0"
+    github: "PCRE2Project/pcre2"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libre2"
+    ecosystem: "Debian:12"
+    package: "libre2-9"
+    github: "google/re2"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "OpenSSL"
+    ecosystem: "OSS-Fuzz"
+    package: "openssl"
+    github: "openssl/openssl"
+    current_version: "3.2.x"
+    category: "OS"
+    priority: "high"
+    note: "보안 최우선 관찰 대상"
+
+  - name: "GnuTLS"
+    ecosystem: "Debian:12"
+    package: "libgnutls30"
+    github: "gnutls/gnutls"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+
+  - name: "libgcrypt"
+    ecosystem: "Debian:12"
+    package: "libgcrypt20"
+    github: "gpg/libgcrypt"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+
+  - name: "libgpg-error"
+    ecosystem: "Debian:12"
+    package: "libgpg-error0"
+    github: "gpg/libgpg-error"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libtasn1"
+    ecosystem: "Debian:12"
+    package: "libtasn1-6"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "nettle"
+    ecosystem: "Debian:12"
+    package: "libnettle8"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "gmp"
+    ecosystem: "Debian:12"
+    package: "libgmp10"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "MIT Kerberos"
+    ecosystem: "Debian:12"
+    package: "libkrb5-3"
+    github: "krb5/krb5"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+
+  - name: "libsasl2"
+    ecosystem: "Debian:12"
+    package: "libsasl2-2"
+    github: "cyrusimap/cyrus-sasl"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libldap"
+    ecosystem: "Debian:12"
+    package: "libldap-2.5-0"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+    note: "OpenLDAP 프로젝트의 일부"
+
+  - name: "liblber"
+    ecosystem: "Debian:12"
+    package: "liblber-2.5-0"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+    note: "OpenLDAP 프로젝트의 일부"
+
+  - name: "OpenLDAP"
+    ecosystem: "Debian:12"
+    package: "slapd"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+    note: "공식 저장소는 openldap.org (GitHub 없음)"
+
+  - name: "libcurl"
+    ecosystem: "OSS-Fuzz"
+    package: "curl"
+    github: "curl/curl"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+
+  - name: "libnghttp2"
+    ecosystem: "Debian:12"
+    package: "libnghttp2-14"
+    github: "nghttp2/nghttp2"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libnghttp3"
+    ecosystem: "Debian:12"
+    package: "libnghttp3-9"
+    github: "ngtcp2/nghttp3"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libidn"
+    ecosystem: "Debian:12"
+    package: "libidn12"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libidn2"
+    ecosystem: "Debian:12"
+    package: "libidn2-0"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libunistring"
+    ecosystem: "Debian:12"
+    package: "libunistring2"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libpsl"
+    ecosystem: "Debian:12"
+    package: "libpsl5"
+    github: "rockdaboot/libpsl"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "zlib"
+    ecosystem: "OSS-Fuzz"
+    package: "zlib"
+    github: "madler/zlib"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+
+  - name: "libbz2"
+    ecosystem: "Debian:12"
+    package: "libbz2-1.0"
+    github: null
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "liblzma"
+    ecosystem: "Debian:12"
+    package: "liblzma5"
+    github: "tukaani-project/xz"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+    note: "2024 XZ backdoor 사건 이후 중요도 상승"
+
+  - name: "libzstd"
+    ecosystem: "Debian:12"
+    package: "libzstd1"
+    github: "facebook/zstd"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "liblz4"
+    ecosystem: "Debian:12"
+    package: "liblz4-1"
+    github: "lz4/lz4"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libarchive"
+    ecosystem: "Debian:12"
+    package: "libarchive13"
+    github: "libarchive/libarchive"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libxml2"
+    ecosystem: "OSS-Fuzz"
+    package: "libxml2"
+    github: "GNOME/libxml2"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "high"
+
+  - name: "libxslt"
+    ecosystem: "Debian:12"
+    package: "libxslt1.1"
+    github: "GNOME/libxslt"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libexpat"
+    ecosystem: "OSS-Fuzz"
+    package: "expat"
+    github: "libexpat/libexpat"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "medium"
+
+  - name: "libyaml"
+    ecosystem: "Debian:12"
+    package: "libyaml-0-2"
+    github: "yaml/libyaml"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libjson-c"
+    ecosystem: "Debian:12"
+    package: "libjson-c5"
+    github: "json-c/json-c"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
+
+  - name: "libjansson"
+    ecosystem: "Debian:12"
+    package: "libjansson4"
+    github: "akheron/jansson"
+    current_version: "확인 필요"
+    category: "OS"
+    priority: "low"
